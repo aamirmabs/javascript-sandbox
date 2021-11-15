@@ -83,28 +83,53 @@ const fakeRequestPromise = (url) => {
   });
 };
 
+// nesting newer requests inside the older requests
+// each nested request has its own customized error messages
+// fakeRequestPromise(`google.com`)
+//   .then(() => {
+//     console.log(`1: Success`);
+
+//     // sending second request
+//     fakeRequestPromise(`facebook.com`)
+//       .then(() => {
+//         console.log(`2: Success`);
+
+//         // sending third request
+//         fakeRequestPromise(`instagram.com`)
+//           .then(() => {
+//             console.log(`3: Success`);
+//           })
+//           .catch(() => {
+//             console.log(`3: Failure`);
+//           });
+//       })
+//       .catch(() => {
+//         console.log(`2: Failure`);
+//       });
+//   })
+//   .catch(() => {
+//     console.log(`1: Failure`);
+//   });
+
+// using the fakeRequest with linear then() statements
 fakeRequestPromise(`google.com`)
   .then(() => {
-    console.log(`1: Success`);
+    console.log(`Resolved: google.com`);
 
-    // sending second request
-    fakeRequestPromise(`facebook.com`)
-      .then(() => {
-        console.log(`2: Success`);
+    // return a new promise so that is used in the next .then() callback
+    return fakeRequestPromise(`facebook.com`);
+  })
+  .then(() => {
+    console.log(`Resolved: facebook.com`);
 
-        // sending third request
-        fakeRequestPromise(`instagram.com`)
-          .then(() => {
-            console.log(`3: Success`);
-          })
-          .catch(() => {
-            console.log(`3: Failure`);
-          });
-      })
-      .catch(() => {
-        console.log(`2: Failure`);
-      });
+    // return a new promise so that is used in the next .then() callback
+    return fakeRequestPromise(`instagram.com`);
+  })
+  .then(() => {
+    console.log(`Resolved: instagram.com`);
+
+    console.log(`ALL REQUESTS RESOLVED`);
   })
   .catch(() => {
-    console.log(`1: Failure`);
+    console.log(`ERROR occured in a request`);
   });
