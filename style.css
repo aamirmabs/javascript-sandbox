@@ -1,0 +1,6 @@
+* {
+  transition: all 500ms;
+}
+body {
+  background-color: white;
+}

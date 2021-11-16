@@ -112,24 +112,45 @@ const fakeRequestPromise = (url) => {
 //   });
 
 // using the fakeRequest with linear then() statements
-fakeRequestPromise(`google.com`)
-  .then(() => {
-    console.log(`Resolved: google.com`);
+// fakeRequestPromise(`google.com`)
+//   .then(() => {
+//     console.log(`Resolved: google.com`);
 
-    // return a new promise so that is used in the next .then() callback
-    return fakeRequestPromise(`facebook.com`);
-  })
-  .then(() => {
-    console.log(`Resolved: facebook.com`);
+//     // return a new promise so that is used in the next .then() callback
+//     return fakeRequestPromise(`facebook.com`);
+//   })
+//   .then(() => {
+//     console.log(`Resolved: facebook.com`);
 
-    // return a new promise so that is used in the next .then() callback
-    return fakeRequestPromise(`instagram.com`);
-  })
-  .then(() => {
-    console.log(`Resolved: instagram.com`);
+//     // return a new promise so that is used in the next .then() callback
+//     return fakeRequestPromise(`instagram.com`);
+//   })
+//   .then(() => {
+//     console.log(`Resolved: instagram.com`);
 
-    console.log(`ALL REQUESTS RESOLVED`);
-  })
-  .catch(() => {
-    console.log(`ERROR occured in a request`);
+//     console.log(`ALL REQUESTS RESOLVED`);
+//   })
+//   .catch(() => {
+//     console.log(`ERROR occured in a request`);
+//   });
+
+// creating a Promise to change the background of the body
+const bgChangePromise = (color, delay) => {
+  const returnedPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // console.log(`Changing to ${color}`);
+      document.body.style.backgroundColor = color;
+      resolve();
+    }, delay);
   });
+  // console.log(returnedPromise);
+  return returnedPromise;
+};
+
+bgChangePromise("violet", 1000)
+  .then(() => bgChangePromise("indigo", 1000))
+  .then(() => bgChangePromise("blue", 1000))
+  .then(() => bgChangePromise("green", 1000))
+  .then(() => bgChangePromise("yellow", 1000))
+  .then(() => bgChangePromise("orange", 1000))
+  .then(() => bgChangePromise(`red`, 1000));
