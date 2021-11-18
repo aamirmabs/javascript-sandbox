@@ -62,26 +62,25 @@
 // );
 
 // using a promise to emulate the request callback
+// const fakeRequestPromise = (url) => {
+//   console.log(`==========`);
+//   console.log(`Requested URL is: ${url}`);
 
-const fakeRequestPromise = (url) => {
-  console.log(`==========`);
-  console.log(`Requested URL is: ${url}`);
+//   return new Promise((resolve, reject) => {
+//     const delay = Math.floor(Math.random() * 2000) + 500;
 
-  return new Promise((resolve, reject) => {
-    const delay = Math.floor(Math.random() * 2000) + 500;
-
-    setTimeout(() => {
-      // console.log(delay);
-      if (delay < 2000) {
-        resolve(`Your data recieved from ${url}`);
-        console.log(`Data recieved in ${delay} ms`);
-      } else {
-        console.log(`ERR: Data not recieved`);
-        reject(`Connection failure`);
-      }
-    }, delay);
-  });
-};
+//     setTimeout(() => {
+//       // console.log(delay);
+//       if (delay < 2000) {
+//         resolve(`Your data recieved from ${url}`);
+//         console.log(`Data recieved in ${delay} ms`);
+//       } else {
+//         console.log(`ERR: Data not recieved`);
+//         reject(`Connection failure`);
+//       }
+//     }, delay);
+//   });
+// };
 
 // nesting newer requests inside the older requests
 // each nested request has its own customized error messages
@@ -347,56 +346,57 @@ const fakeRequestPromise = (url) => {
 // changeColors();
 
 // ----------
-// modifying the delayedColorChange function to reject with status codes
-const delayedColorChange = async (color, delay) => {
-  return new Promise((resolve, reject) => {
-    const permittedColors = [
-      "violet",
-      "indigo",
-      "blue",
-      "green",
-      "yellow",
-      "orange",
-      "red",
-    ];
+// // modifying the delayedColorChange function to reject with status codes
+// const delayedColorChange = async (color, delay) => {
+//   return new Promise((resolve, reject) => {
+//     const permittedColors = [
+//       "violet",
+//       "indigo",
+//       "blue",
+//       "green",
+//       "yellow",
+//       "orange",
+//       "red",
+//     ];
 
-    setTimeout(() => {
-      if (delay === undefined) {
-        reject({
-          status: false,
-          statusCode: 478,
-          message: `REJECT: Delay undefined`,
-        });
-      } else if (typeof color !== "string") {
-        reject({
-          status: false,
-          statusCode: 456,
-          message: `REJECT: Color is not a string`,
-        });
-      } else if (color === undefined) {
-        reject({
-          status: false,
-          statusCode: 478,
-          message: `REJECT: Color undefined`,
-        });
-      } else if (!permittedColors.includes(color)) {
-        reject({
-          status: false,
-          statusCode: 432,
-          message: `REJECT: Color not allowed in rainbow`,
-        });
-      } else {
-        document.body.style.backgroundColor = color;
-        resolve({
-          status: true,
-          statusCode: 200,
-          message: `RESOLVED: Color changed to ${color}`,
-        });
-      }
-    }, delay);
-  });
-};
+//     setTimeout(() => {
+//       if (delay === undefined) {
+//         reject({
+//           status: false,
+//           statusCode: 478,
+//           message: `REJECT: Delay undefined`,
+//         });
+//       } else if (typeof color !== "string") {
+//         reject({
+//           status: false,
+//           statusCode: 456,
+//           message: `REJECT: Color is not a string`,
+//         });
+//       } else if (color === undefined) {
+//         reject({
+//           status: false,
+//           statusCode: 478,
+//           message: `REJECT: Color undefined`,
+//         });
+//       } else if (!permittedColors.includes(color)) {
+//         reject({
+//           status: false,
+//           statusCode: 432,
+//           message: `REJECT: Color not allowed in rainbow`,
+//         });
+//       } else {
+//         document.body.style.backgroundColor = color;
+//         resolve({
+//           status: true,
+//           statusCode: 200,
+//           message: `RESOLVED: Color changed to ${color}`,
+//         });
+//       }
+//     }, delay);
+//   });
+// };
 
+// ----------
 // // using await to pause and wait for completion
 // const rainbow = async () => {
 //   console.log(await delayedColorChange(`violet`, 1000));
@@ -413,36 +413,144 @@ const delayedColorChange = async (color, delay) => {
 // rainbow();
 
 // ----------
-// using try catch blocks to manage errors
-const rainbow = async () => {
-  try {
-    console.log(`=== In try block ===`);
-    await delayedColorChange(`violet`, 1000);
-    await delayedColorChange(`indigo`, 1000);
-    // await delayedColorChange(50, 1000);
-    // await delayedColorChange(undefined, 1000);
-    // await delayedColorChange(`white`, 1000);
-    await delayedColorChange(`blue`, 1000);
-    await delayedColorChange(`green`, 1000);
-    await delayedColorChange(`yellow`, 1000);
-    await delayedColorChange(`orange`, 1000);
-    await delayedColorChange(`red`, 1000);
-    console.log(`=== RAINBOW COMPLETED SUCCESSFULLY ===`);
-  } catch (error) {
-    console.log(`=== In catch block ===`);
-    console.log(error);
-  }
-};
-rainbow();
+// // using try catch blocks to manage errors
+// const rainbow = async () => {
+//   try {
+//     console.log(`=== In try block ===`);
+//     await delayedColorChange(`violet`, 1000);
+//     await delayedColorChange(`indigo`, 1000);
+//     // await delayedColorChange(50, 1000);
+//     // await delayedColorChange(undefined, 1000);
+//     // await delayedColorChange(`white`, 1000);
+//     await delayedColorChange(`blue`, 1000);
+//     await delayedColorChange(`green`, 1000);
+//     await delayedColorChange(`yellow`, 1000);
+//     await delayedColorChange(`orange`, 1000);
+//     await delayedColorChange(`red`, 1000);
+//     console.log(`=== RAINBOW COMPLETED SUCCESSFULLY ===`);
+//   } catch (error) {
+//     console.log(`=== In catch block ===`);
+//     console.log(error);
+//   }
+// };
+// rainbow();
 
-// ================
-
-// # typical usage scenario
-// ================
 // ================
 
 // # sample scenario: weather app
 // ================
+// simple function to fetch the longitude and latitude of user
+// const getLongLat = async () => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve({ long: 25, lat: 35 });
+//     }, 2500);
+//   });
+// };
+
+// const longLat = getLongLat();
+
+// ----------
+// now printing the value returned after promise resolution
+// const getLongLat = async () => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve({ long: 25, lat: 35 });
+//     }, 2500);
+//   });
+// };
+
+// const getWeather = async () => {
+//   console.log(`=== getWeather() entry ===`);
+
+//   const longLat = await getLongLat();
+//   console.log(`longLat value recieved:`, longLat);
+
+//   console.log(`=== getWeather() exit ===`);
+// };
+
+// getWeather();
+
+// ----------
+// using the value recieved in subsequent functions
+const getLongLat = async () => {
+  return new Promise((resolve, reject) => {
+    const random = () => Math.floor(Math.random() * 180);
+
+    setTimeout(() => {
+      resolve({ long: random(), lat: random() });
+    }, 1000);
+  });
+};
+
+const getCityName = async (longLat) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(`getCityName() recieved longLat:`, longLat);
+
+      let cities = [
+        `Aberdeen`,
+        `Berlin`,
+        `Cairo`,
+        `Delhi`,
+        `London`,
+        `Moscow`,
+        `Tokyo`,
+      ];
+      let index = Math.floor(Math.random() * cities.length);
+
+      resolve({ city: cities[index], ...longLat });
+    }, 1000);
+  });
+};
+
+const getTemperature = async (city) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(`getTemperature() recieved city:`, city);
+
+      const temp = Math.floor(Math.random() * 50);
+
+      resolve({ temperature: temp, ...city });
+    }, 1000);
+  });
+};
+
+const displayWeatherData = async (data) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const { temperature, city } = data;
+
+      document.getElementById("city-name").innerText = city;
+      document.getElementById("temp-value").innerText = temperature;
+
+      resolve();
+    }, 1000);
+  });
+};
+
+const getWeather = async () => {
+  console.log(`=== getWeather() entry ===`);
+
+  const longLatData = await getLongLat();
+  console.log(`getWeather() longLat value recieved:`, longLatData);
+
+  const cityData = await getCityName(longLatData);
+  console.log(`getWeather() cityName value recieved:`, cityData);
+
+  const temperatureData = await getTemperature(cityData);
+  console.log(`getWeather() temperature value recieved:`, temperatureData);
+
+  await displayWeatherData(temperatureData);
+  console.log(`getWeather() weather data updated on front-end `);
+
+  console.log(`=== getWeather() exit ===`);
+};
+
+// bind getWeather() to button
+const button = document.getElementById("button");
+button.addEventListener(`click`, getWeather);
+
 // ================
 
 // # sample scenario: fetching assets
