@@ -5,20 +5,36 @@ const express = require(`express`);
 const app = express();
 const port = 3000;
 
-// app.use() runs a callback when a request is recieved
-// no matter where the request is (main page, sub page etc.)
-app.use(() => {
-  let today = new Date();
-  let time =
-    today.getHours() +
-    ":" +
-    (today.getMinutes() < 10 ? `0` : ``) +
-    today.getMinutes() +
-    ":" +
-    (today.getSeconds() < 10 ? `0` : ``) +
-    today.getSeconds();
+// ----------
+// // app.use() runs a callback when a request is recieved
+// // no matter where the request is (main page, sub page etc.)
+// app.use((req, res) => {
+//   // all statements here will run whenever a request to any URL is recieved
+//   console.log(`New request recieved.`);
 
-  console.log(`New request recieved. ${time}`);
+//   // res.send("Response being sent.");
+//   res.send("<h1>Response as a heading being sent.</h1>");
+// });
+
+// ----------
+// routing in express - creating these routes and responses
+// /cats => 'meow'
+// /dogs => 'woof'
+// / => home page
+// we will use app.get(`${/path}`, (req, res) => { callback })
+app.get(`/`, (req, res) => {
+  res.send(`GET:/ page requested`);
+});
+
+app.get(`/cats`, (req, res) => {
+  res.send(`GET:/cats page requested`);
+});
+app.post(`/cats`, (req, res) => {
+  res.send(`POST:/cats page requested`);
+});
+
+app.get(`/dogs`, (req, res) => {
+  res.send(`GET:/dogs page requested`);
 });
 
 // starting a server that is listening for requests on ${port}
