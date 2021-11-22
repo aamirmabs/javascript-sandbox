@@ -36,6 +36,25 @@ app.post(`/cats`, (req, res) => {
 app.get(`/dogs`, (req, res) => {
   res.send(`GET:/dogs page requested`);
 });
+app.post(`/dogs`, (req, res) => {
+  res.send(`POST:/dogs page requested`);
+});
+
+// ----------
+// express path parameters
+app.get(`/r/:subreddit`, (req, res) => {
+  const { subreddit } = req.params;
+  // console.log(req.params);
+  res.send(`Browsing the ${subreddit.toUpperCase()} subreddit`);
+});
+
+app.get(`/r/:subreddit/:postID`, (req, res) => {
+  const { subreddit, postID } = req.params;
+  // console.log(req.params);
+  res.send(
+    `Browsing the ${postID.toUpperCase()} post in ${subreddit.toUpperCase()} subreddit`
+  );
+});
 
 // starting a server that is listening for requests on ${port}
 app.listen(port, () => {
