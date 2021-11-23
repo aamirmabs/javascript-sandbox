@@ -56,6 +56,16 @@ app.get(`/r/:subreddit/:postID`, (req, res) => {
   );
 });
 
+// ----------
+// managing query strings
+app.get(`/search`, (req, res) => {
+  console.log(req.query);
+  const { q } = req.query;
+  res.send(`Search results for ${q}`);
+  // for request /search?q=query&lang=EN
+  // res.query will be { q: 'query', lang: 'EN' }
+});
+
 // starting a server that is listening for requests on ${port}
 app.listen(port, () => {
   console.log(`Listening on port:${port}`);
