@@ -24,6 +24,7 @@ app.get(`/`, (req, res) => {
   res.render(`home`);
 });
 
+// passing values as parameters to ejs template and rendering them
 app.get(`/random`, (req, res) => {
   // let random = Math.floor(Math.random() * 10) + 1;
   // res.render(`random`, { randomNumber: random });
@@ -34,6 +35,13 @@ app.get(`/random`, (req, res) => {
     gender: 1,
   };
   res.render(`random`, { person });
+});
+
+// rendering a subreddit template and using the route parameter id there
+app.get(`/r/:subreddit`, (req, res) => {
+  const { subreddit } = req.params;
+  const test = { valueA: 10, valueB: 20 };
+  res.render(`subreddit`, { subreddit, test });
 });
 
 // app listening to requests on port
